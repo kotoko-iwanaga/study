@@ -32,20 +32,13 @@ void printList(const Node* head) {
 int main() {
     char z = 0;
     Node* head = NULL;
-    for (int i = 0; (z = getchar()) != '\n'; i++) {
-        push(&head, z);
+    int size = 100;
+    char* str = (char*)calloc(size,sizeof(char));
+    fgets(str, size, stdin);
+    for (int i = strlen(str)-1; i >= 0; i--) {
+        push(&head, str[i]);
     }
-    char* str = (char*)malloc(sizeof(head));
-    z = 0;
-    while (head) {
-        str[z] = head->c;
-        head = head->next;
-        z++;
-    }
-    str[z] = '\0';
-    for (int i = strlen(str); i >= 0; i--) {
-        printf("%c", str[i]);
-    }
+    printList(head);
     
     
 }
