@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CharWork.h"
 
 
 typedef struct List {
@@ -124,7 +123,5 @@ int main() {
     doubleMinWord(head, min_word, min_length, position);
     
     printList(head); 
-    
-
     
 }
