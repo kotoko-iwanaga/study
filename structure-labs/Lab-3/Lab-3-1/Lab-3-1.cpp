@@ -32,7 +32,7 @@ int main() {
     doubleMinWord(head, min_word, min_length, position);
     printList(head); 
 
-    
+    deleteList(&head);
 }
 
 

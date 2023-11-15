@@ -2,15 +2,23 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "LinkedList.h"
 
+void getFromArray(DblLinkedList, char*);
+void setMinWord(int&, int&, int&, int&);
+void getMinLength(DblLinkedList, int&, int&);
+char* getMinWord(DblLinkedList, int, int);
+void doubleMinWord(DblLinkedList, char*, int, int);
 
 
 int main()
 {
-    
+    DblLinkedList* list = createDblLinkedList();
 }
+
+
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку" 

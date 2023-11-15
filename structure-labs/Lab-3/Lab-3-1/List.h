@@ -13,8 +13,6 @@ int deleteNth(List**, int);
 
 
 
-
-
 void push(List** head, char data) {
     List* tmp = (List*)malloc(sizeof(List));
     tmp->c = data;
@@ -86,6 +84,17 @@ int deleteNth(List** head, int n) {
         free(elm);
         return val;
     }
+}
+
+
+void deleteList(List** head) {
+    List* prev = NULL;
+    while ((*head)->next) {
+        prev = (*head);
+        (*head) = (*head)->next;
+        free(prev);
+    }
+    free(*head);
 }
 
 
