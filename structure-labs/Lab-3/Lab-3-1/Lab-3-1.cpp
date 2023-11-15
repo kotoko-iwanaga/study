@@ -31,8 +31,9 @@ int main() {
 
     doubleMinWord(head, min_word, min_length, position);
     printList(head); 
-
-    
+    head = NULL;
+    free(head);
+    //deleteList(&head);
 }
 
 
