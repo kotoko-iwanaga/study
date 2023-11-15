@@ -1,32 +1,84 @@
-﻿// Lab-3-2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "LinkedList.h"
+#include <locale.h>
 
-void getFromArray(DblLinkedList, char*);
-void setMinWord(int&, int&, int&, int&);
-void getMinLength(DblLinkedList, int&, int&);
-char* getMinWord(DblLinkedList, int, int);
-void doubleMinWord(DblLinkedList, char*, int, int);
+typedef struct node {
+    char word[50];
+    struct node* next;
+    struct node* prev;
+} Node;
 
+void insert(Node** head, char* word) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    strcpy(new_node->word, word);
+    new_node->next = NULL;
+    new_node->prev = NULL;
 
-int main()
-{
-    DblLinkedList* list = createDblLinkedList();
+    if (*head == NULL) {
+        *head = new_node;
+    }
+    else {
+        Node* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new_node;
+        new_node->prev = current;
+    }
 }
 
+void doubleMinWord(Node* head) {
+    Node* current = head;
+    Node* minNode = head;
+    int minLength = strlen(head->word);
 
+    while (current != NULL) {
+        int length = strlen(current->word);
+        if (length < minLength) {
+            minLength = length;
+            minNode = current;
+        }
+        current = current->next;
+    }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку" 
+    char* doubledWord = (char*)malloc(sizeof(char) * (minLength * 2 + 1));
+    strcpy(doubledWord, minNode->word);
+    strcat(doubledWord, minNode->word);
+    strcpy(minNode->word, doubledWord);
+    free(doubledWord);
+}
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+void printList(Node* head) {
+    Node* current = head;
+    while (current != NULL) {
+        printf("%s ", current->word);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    setlocale(0, "");
+    char input[100];
+    printf("Введите строку: ");
+    fgets(input, sizeof(input), stdin);
+
+    Node* head = NULL;
+    char* word = strtok(input, " \n");
+    while (word != NULL) {
+        insert(&head, word);
+        word = strtok(NULL, " \n");
+    }
+
+    printf("Исходная строка: ");
+    printList(head);
+
+    doubleMinWord(head);
+
+    printf("Результат: ");
+    printList(head);
+
+    return 0;
+}
