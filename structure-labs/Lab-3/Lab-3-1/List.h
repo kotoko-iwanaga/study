@@ -5,11 +5,11 @@ typedef struct List {
 } List;
 
 void push(List**, char);
-int pop(List**);
+char pop(List**);
 void printList(const List*);
 void insert(List*, unsigned, int);
 List* getNth(List*, int);
-int deleteNth(List**, int);
+char deleteNth(List**, int);
 
 
 
@@ -20,7 +20,7 @@ void push(List** head, char data) {
     (*head) = tmp;
 }
 
-int pop(List** head) { // удаление первого элемента
+char pop(List** head) { // удаление первого элемента
     List* prev = NULL;
     int val;
     if (head == NULL) {
@@ -71,7 +71,7 @@ List* getNth(List* head, int n) {
     return head;
 }
 
-int deleteNth(List** head, int n) {
+char deleteNth(List** head, int n) {
     if (n == 0) {
         return pop(head);
     }
