@@ -1,71 +1,76 @@
-﻿#include <iostream>
-#include <string>
-#include <unordered_map>
+﻿#include<vector>
+#include<string>
+#include<map>
+#include <iostream>
+#include <conio.h>
 #include <locale>
 
-std::unordered_map<std::string, int> dictionary;
+using namespace std;
 
-void compress(std::string input) {
-    std::string current = "";
-    std::string compressed = "";
+// прототипы для переменных алгоритма
+string decode(const vector<int>&); 
+vector<int> encode(const string& ori);
 
-    for (int i = 0; i < input.length(); i++) {
-        current += input[i];
-        if (dictionary.find(current) == dictionary.end()) {
-            dictionary[current] = dictionary.size();
-            compressed += std::to_string(dictionary[current.substr(0, current.length() - 1)]);
-            compressed += current[current.length() - 1];
-            current = "";
-        }
-    }
-
-    // Handling the last substring
-    if (!current.empty()) {
-        compressed += std::to_string(dictionary[current]);
-    }
-
-    std::cout << "Compressed string: " << compressed << std::endl;
-}
-
-void decompress(std::string input) {
-    std::unordered_map<int, std::string> reverseDictionary;
-
-    for (auto& entry : dictionary) {
-        reverseDictionary[entry.second] = entry.first;
-    }
-
-    std::string decompressed = "";
-    int currentIndex = 0;
-
-    while (currentIndex < input.length()) {
-        int code = input[currentIndex] - '0';
-        currentIndex++;
-
-        if (currentIndex < input.length()) {
-            char nextChar = input[currentIndex];
-            currentIndex++;
-
-            std::string entry = reverseDictionary[code];
-            dictionary[entry + nextChar] = dictionary.size();
-            decompressed += entry + nextChar;
-        }
-        else {
-            decompressed += reverseDictionary[code];
-        }
-    }
-
-    std::cout << "Decompressed string: " << decompressed << std::endl;
-}
 
 int main() {
-    setlocale(0, "");
-    std::string input = "Artigey Artigey";
+	setlocale(0, "");
+	string test;
+	cout << "Введите строку для закодирования: ";
+	cin >> test;
+	cout << "Исходная строка: " << test << endl;
+	cout << "Закодированный вид: ";
+	for (auto i : encode(test))
+		std::cout << i << ' ';
+	putchar('\n');
+	cout << "Раскодированный вид: ";
+	cout << decode(encode(test)) << endl;
+	cout << "Нажмите любую клавишу, чтобы выйти";
+	_getch();
+}
 
-    // Compress the input string
-    compress(input);
 
-    // Decompress the compressed string
-    decompress("012301230123");
+string decode(const vector<int>& v) {
+	map<int, string> a_dict; // словарь
+	int dictSize = 256; // размер словаря задаваемый
 
-    return 0;
+	for (int i = 0; i < dictSize; ++i)
+		a_dict[i] = string(1, i);
+
+	string s, entry, res; 
+	s = res = a_dict[v[0]];
+
+	for (size_t i = 1; i < v.size(); ++i) {
+		int k = v[i];
+		if (a_dict.count(k))
+			entry = a_dict[k];
+		else if (k == dictSize)
+			entry = s + s[0];
+		else throw "error";
+		res += entry;
+		a_dict[dictSize++] = s + entry[0];
+		s = entry;
+	}
+	return res;
+}
+
+
+vector<int> encode(const string& original) {
+	map<string, int> dict;
+	int dictSize = 256;
+
+	for (int i = 0; i < dictSize; ++i)
+		dict[string(1, i)] = i;
+	vector<int> res;
+	string s;
+
+	for (char z : original) { 
+		if (dict.count(s + z)) s += z;
+		else {
+			res.emplace_back(dict[s]);
+			dict[s + z] = dictSize++;
+			s = z;
+		}
+	}
+	if (s.size()) res.emplace_back(dict[s]);
+	return res;
 }
