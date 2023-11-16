@@ -4,6 +4,7 @@
 
 #include <locale.h>
 #include <stdio.h>
+#include <conio.h>
 #include "LinkedList.h"
 
 void menu();
@@ -12,77 +13,86 @@ int main()
 {
     setlocale(0, "");
     menu();
+    printf("Нажмите на любую кнопку, чтобы выйти");
+    _getch();
 }
 
 const char* FuncNames[14] = {
-    "Начать работу со списком",
-    "Сделать список пустым",
-    "Проверка на пустоту",
-    "Установить указатель на начало списка",
-    "Проверка на нахождение указателя в конце списка", //5
-    "Сдвинуть указатель на след. элемент",
-    "Вывести значение элемента за указателем",
-    "Удалить элемент за указателем",
-    "Взять элемент за указателем",
-    "Изменить значение за указателем", //10
-    "Добавить новый элемент за указателем",
-    "Вывести список на экран",
-    "Удалить список",
-    "Завершить работу программы" //14
+    "1) Начать работу со списком",
+    "2) Сделать список пустым",
+    "3) Проверка на пустоту",
+    "4) Установить указатель на начало списка",
+    "5) Проверка на нахождение указателя в конце списка", //5
+    "6) Сдвинуть указатель на след. элемент",
+    "7) Вывести значение элемента за указателем",
+    "8) Удалить элемент за указателем",
+    "9) Взять элемент за указателем",
+    "0) Изменить значение за указателем", //10
+    "a) Добавить новый элемент за указателем",
+    "b) Вывести список на экран",
+    "c) Удалить список",
+    "d) Завершить работу программы" //14
 };
 
 void menu() {
     bool on = true;
-    char choice[2] = 0;
+    char choice = 0;
     while (on == true) {
         for (int i = 1; i <= 14; i++) {
-            printf("%d) %s\n", i, FuncNames[i - 1]);
+            printf("%s\n", FuncNames[i - 1]);
         }
-        scanf("%s", choice);
+        choice = _getch();
         switch (choice) {
         case '1':
-            
+            createList();
             break;
         case '2':
-
+            clearList();
             break;
         case '3':
-
+            checkClean();
             break;
         case '4':
-
+            goToFirst();
             break;
         case '5':
-
+            checkEnd();
             break;
         case '6':
-
+            goToNext();
             break;
         case '7':
-
+            getNext();
             break;
         case '8':
-
+            deleteNext();
             break;
         case '9':
-
+            getNextElement();
             break;
-        case "10":
-
+        case '0':
+            changeNextElement();
             break;
-        case '':
-
+        case 'A':
+        case 'a':
+            addNextElement();
             break;
-        case '':
-
+        case 'B':
+        case 'b':
+            printList();
             break;
-        case '':
-
+        case 'C':
+        case 'c':
+            deleteList();
             break;
-        case '':
-
+        case 'D':
+        case 'd':
+            on = false;
             break;
+        default:
+            printf("Повторите ввод\n");
         }
+        putchar('\n');
     }
 }
 
