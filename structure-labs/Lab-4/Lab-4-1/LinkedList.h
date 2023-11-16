@@ -1,4 +1,11 @@
 #pragma once
+typedef struct List {
+	int value;
+	struct List* next;
+} List;
+
+
+
 void createList();
 void clearList();
 bool checkClean();
@@ -12,7 +19,6 @@ void changeNextElement();
 void addNextElement();
 void printList();
 void deleteList();
-
 
 void createList() {
 
