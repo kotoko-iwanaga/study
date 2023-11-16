@@ -1,6 +1,4 @@
-﻿// Lab-4-1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 
 #include <locale.h>
 #include <stdio.h>
@@ -38,8 +36,8 @@ void menu() {
     bool on = true;
     char choice = 0;
     while (on == true) {
-        for (int i = 1; i <= 14; i++) {
-            printf("%s\n", FuncNames[i - 1]);
+        for (int i = 0; i < 14; i++) {
+            printf("%s\n", FuncNames[i]);
         }
         choice = _getch();
         switch (choice) {
