@@ -83,7 +83,7 @@ void menu() {
             break;
         case 'C':
         case 'c':
-            deleteList();
+            deleteList(&node);
             break;
         case 'D':
         case 'd':

@@ -18,7 +18,7 @@ void getNextElement();
 void changeNextElement();
 void addNextElement();
 void printList(List*);
-void deleteList();
+void deleteList(List**);
 
 void createList(List** node) {
 	size_t size = 10;
@@ -86,6 +86,7 @@ void printList(List* node) {
 	putchar('\n');
 }
 
-void deleteList() {
-
+void deleteList(List** node) {
+	clearList(*node);
+	free(*node);
 }
