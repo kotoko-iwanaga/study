@@ -34,6 +34,7 @@ const char* FuncNames[14] = {
 
 void menu() {
     bool on = true;
+    bool access = false;
     char choice = 0;
     while (on == true) {
         for (int i = 0; i < 14; i++) {
