@@ -6,8 +6,8 @@ typedef struct List {
 
 
 
-void createList();
-void clearList();
+void createList(List**);
+List* clearList(List*);
 bool checkClean();
 void goToFirst();
 bool checkEnd();
@@ -17,15 +17,28 @@ void deleteNext();
 void getNextElement();
 void changeNextElement();
 void addNextElement();
-void printList();
-void deleteList();
+void printList(List*);
+void deleteList(List**);
 
-void createList() {
+void createList(List** node) {
+	size_t size = 10;
+	int* arr = (int*)calloc(size, sizeof(int));
+	printf("Введите 10 чисел, разделяя их пробелами: ");
+	for (auto i = size; i > 0; i--)
+		scanf("%d", &arr[i-1]);
+	for (auto i = 0; i < size; i++) {
+		List* tmp = (List*)malloc(sizeof(List));
+		tmp->value = arr[i];
+		tmp->next = *node;
+		*node = tmp;
+	}
+	printf("Список успешно создан\n");
 
 }
 
-void clearList() {
-
+List* clearList(List * node) {
+	node = NULL;
+	return node;
 }
 
 bool checkClean() {
@@ -64,10 +77,16 @@ void addNextElement() {
 
 }
 
-void printList() {
-
+void printList(List* node) {
+	printf("\nСписок: ");
+	while (node) {
+		printf("%d ", node->value);
+		node = node->next;
+	}
+	putchar('\n');
 }
 
-void deleteList() {
-
+void deleteList(List** node) {
+	clearList(*node);
+	free(*node);
 }

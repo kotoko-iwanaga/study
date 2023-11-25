@@ -2,6 +2,7 @@
 
 #include <locale.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <conio.h>
 #include "LinkedList.h"
 
@@ -36,6 +37,7 @@ void menu() {
     bool on = true;
     bool access = false;
     char choice = 0;
+    List* node = NULL;
     while (on == true) {
         for (int i = 0; i < 14; i++) {
             printf("%s\n", FuncNames[i]);
@@ -43,10 +45,10 @@ void menu() {
         choice = _getch();
         switch (choice) {
         case '1':
-            createList();
+            createList(&node);
             break;
         case '2':
-            clearList();
+            node = clearList(node);
             break;
         case '3':
             checkClean();
@@ -78,11 +80,11 @@ void menu() {
             break;
         case 'B':
         case 'b':
-            printList();
+            printList(node);
             break;
         case 'C':
         case 'c':
-            deleteList();
+            deleteList(&node);
             break;
         case 'D':
         case 'd':
