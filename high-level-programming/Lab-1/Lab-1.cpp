@@ -7,11 +7,13 @@ using namespace std;
 
 class Array {
     int size;
-    int *newArray = new int(size);
+    int* newArray = 0;
 public:
     Array(int sizeArr, int *origArray) {
         size = sizeArr;
-        newArray = origArray;
+        newArray = new int(size);
+        for (int i = 0; i < size; i++)
+            newArray[i] = origArray[i];
     }
     bool checkByDecrease() {
         for (int i = 0; i < (size-1); i++) {
@@ -49,16 +51,11 @@ int main()
     int* origArray = new int(sizeArr);
     origArray = inputToArray(sizeArr);
 
-    Array arr{ sizeArr, origArray };
-
+    Array arr{ sizeArr, origArray[5]};
+    arr.printArray();
     int* test = 0;
-    copy(arr.getArray(),arr.getArray()+sizeArr,test);
-
-    for (int i = 0; i < sizeArr; i++) {
-        cout << test[i] << " ";
-    }
-    putchar('\n');
-    cout << arr.checkByDecrease();
+    memcpy(test, arr.getArray(), sizeArr);
+    //cout << arr.checkByDecrease();
 
 }
 
