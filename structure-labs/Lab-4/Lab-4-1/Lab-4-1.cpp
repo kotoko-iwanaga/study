@@ -13,12 +13,126 @@ struct List {
 struct List* head = NULL;
 struct List* current = NULL;
 
-//Функция для создания пустого списка
-struct List* createLinkedList() {
+struct List* createNewList();
+struct List* createList(int);
+void addNewElement(int);
+void deleteList();
+void printCurrentValue();
+void modifyCurrentValue();
+void goNext();
+void checkEmpty();
+void resetCurrent();
+void clearList();
+void printList();
+
+
+
+int main() {
+    setlocale(0, "");
+    char choice;
+    int value;
+
+    while (1) {
+        printf("Меню:\n");
+        printf("1) Начать работу со списками\n");
+        printf("2) Сделать список пустым\n");
+        printf("3) Проверка списка на пустоту\n");
+        printf("4) Установить рабочий указатель в начало списка\n");
+        printf("5) Проверка находится ли рабочий указатель в конце списка\n");
+        printf("6) Сдвинуть рабочий указатель на следующий элемент\n");
+        printf("7) Вывести значение элемента за рабочим указателем\n");
+        printf("8) Удалить элемент за рабочим указателем\n");
+        printf("9) Взять элемент за рабочим указателем\n");
+        printf("0) Изменить значение элемента за рабочим указателем\n");
+        printf("a) Добавить элемент за рабочий указатель\n");
+        printf("b) Распечатать список\n");
+        printf("c) Закончить работу со списком\n");
+        printf("d) Закончить работу программы\n");
+        choice = _getch();
+
+        switch (choice) {
+        case '1':
+            head = createNewList();
+            if (head == NULL) {
+                printf("Список успешно создан\n");
+            }
+            break;
+        case '2':
+            clearList();
+            break;
+        case '3':
+            checkEmpty();
+            break;
+        case '4':
+            resetCurrent();
+            break;
+        case '5':
+            if (current == NULL) {
+                printf("Ошибка: список пуст\n");
+            }
+            else if (current->next == NULL) {
+                printf("Рабочий указатель находится в конце списка\n");
+            }
+            else {
+                printf("Рабочий указатель не находится в конце списка\n");
+            }
+            break;
+        case '6':
+            goNext();
+            break;
+        case '7':
+            printCurrentValue();
+            break;
+        case '8':
+            deleteList();
+            break;
+        case '9':
+            if (current == NULL) {
+                printf("Ошибка: список пуст\n");
+            }
+            else if (current->next == NULL) {
+                printf("Ошибка: нет элемента за рабочим указателем\n");
+            }
+            else {
+                printf("Элемент за рабочим указателем: %d\n", current->next->data);
+            }
+            break;
+        case '0':
+            modifyCurrentValue();
+            break;
+        case 'a':
+            printf("Введите значение элемента: ");
+            scanf("%d", &value);
+            addNewElement(value);
+            break;
+        case 'b':
+            printList();
+            break;
+        case 'c':
+            current = NULL;
+            printf("Работа со списком завершена\n");
+            clearList();
+            break;
+        case 'd':
+            printf("Нажмите любую кнопку чтобы выйти\n");
+            _getch();
+            exit(0);
+            break;
+        default:
+            printf("Некорретный ввод.\n");
+        }
+    }
+
+    return 0;
+}
+
+
+//Cозданиt пустого списка
+struct List* createNewList() {
     return NULL;
 }
 
-// Функция для создания нового узла
+// Cозданиt нового узла cgbcrf
 struct List* createList(int data) {
     struct List* newList = (struct List*)malloc(sizeof(struct List));
     if (newList == NULL) {
@@ -32,7 +146,7 @@ struct List* createList(int data) {
 }
 
 // Функция для добавления нового элемента в конец списка
-void addList(int data) {
+void addNewElement(int data) {
     struct List* newList = createList(data);
 
     if (head == NULL) {
@@ -82,7 +196,7 @@ void printCurrentValue() {
     printf("Значение элемента за рабочим указателем: %d\n", temp->data);
 }
 
-// Функция для изменения значения элемента за рабочим указателем
+// Изменение значения элемента за рабочим указателем
 void modifyCurrentValue() {
     if (current == NULL) {
         printf("Ошибка: список пуст\n");
@@ -103,8 +217,8 @@ void modifyCurrentValue() {
     printf("Значение элемента успешно изменено\n");
 }
 
-// Функция для перемещения рабочего указателя на следующий элемент
-void moveNext() {
+// Перемещение указателя на следующий элемент
+void goNext() {
     if (current == NULL) {
         printf("Ошибка: список пуст\n");
         return;
@@ -117,7 +231,7 @@ void moveNext() {
     printf("Рабочий указатель успешно перемещен на следующий элемент\n");
 }
 
-// Функция для проверки списка на пустоту
+// Проверка на пустоту
 void checkEmpty() {
     if (head == NULL) {
         printf("Список пуст\n");
@@ -127,7 +241,7 @@ void checkEmpty() {
     }
 }
 
-// Функция для установки рабочего указателя в начало списка
+// Перемещение рабочего указателя в начало
 void resetCurrent() {
     current = head;
     if (current == NULL) {
@@ -138,7 +252,7 @@ void resetCurrent() {
     }
 }
 
-// Функция для очистки списка
+// Очистка списка
 void clearList() {
     struct List* temp;
 
@@ -168,102 +282,4 @@ void printList() {
         temp = temp->next;
     }
     printf("\n");
-}
-
-int main() {
-    setlocale(0, "");
-    char choice;
-    int value;
-
-    while (1) {
-        printf("Меню:\n");
-        printf("1) Начать работу со списками\n");
-        printf("2) Сделать список пустым\n");
-        printf("3) Проверка списка на пустоту\n");
-        printf("4) Установить рабочий указатель в начало списка\n");
-        printf("5) Проверка находится ли рабочий указатель в конце списка\n");
-        printf("6) Сдвинуть рабочий указатель на следующий элемент\n");
-        printf("7) Вывести значение элемента за рабочим указателем\n");
-        printf("8) Удалить элемент за рабочим указателем\n");
-        printf("9) Взять элемент за рабочим указателем\n");
-        printf("0) Изменить значение элемента за рабочим указателем\n");
-        printf("a) Добавить элемент за рабочий указатель\n");
-        printf("b) Распечатать список\n");
-        printf("c) Закончить работу со списком\n");
-        printf("d) Закончить работу программы\n");
-        choice = _getch();
-
-        switch (choice) {
-        case '1':
-            head = createLinkedList();
-            if (head == NULL) {
-                printf("Список успешно создан и пуст\n");
-            }
-            break;
-        case '2':
-            clearList();
-            break;
-        case '3':
-            checkEmpty();
-            break;
-        case '4':
-            resetCurrent();
-            break;
-        case '5':
-            if (current == NULL) {
-                printf("Ошибка: список пуст\n");
-            }
-            else if (current->next == NULL) {
-                printf("Рабочий указатель находится в конце списка\n");
-            }
-            else {
-                printf("Рабочий указатель не находится в конце списка\n");
-            }
-            break;
-        case '6':
-            moveNext();
-            break;
-        case '7':
-            printCurrentValue();
-            break;
-        case '8':
-            deleteList();
-            break;
-        case '9':
-            if (current == NULL) {
-                printf("Ошибка: список пуст\n");
-            }
-            else if (current->next == NULL) {
-                printf("Ошибка: нет элемента за рабочим указателем\n");
-            }
-            else {
-                printf("Элемент за рабочим указателем: %d\n", current->next->data);
-            }
-            break;
-        case '0':
-            modifyCurrentValue();
-            break;
-        case 'a':
-            printf("Введите значение элемента: ");
-            scanf("%d", &value);
-            addList(value);
-            break;
-        case 'b':
-            printList();
-            break;
-        case 'c':
-            current = NULL;
-            printf("Работа со списком завершена\n");
-            clearList();
-            break;
-        case 'd':
-            printf("Работа программы завершена\n");
-            exit(0);
-            break;
-        default:
-            printf("Неверный выбор. Попробуйте еще раз\n");
-        }
-    }
-
-    return 0;
 }
