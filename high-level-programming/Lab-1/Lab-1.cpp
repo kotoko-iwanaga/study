@@ -2,7 +2,7 @@
 упорядочен ли этот одномерный массив по убыванию. 
 Для заданной матрицы определить, сколько ее строк упорядочены по возрастанию. 
 Создать класс-наследник, позволяющий определить, состоит ли массив только из простых чисел. 
-Сколько столбцов данной матрицы A(i,j упорядочены по возрастанию?
+Сколько столбцов данной матрицы A(i,j) упорядочены по возрастанию?
 */
 
 #include <iostream>
@@ -12,38 +12,50 @@
 using namespace std;
 
 class Array {
+protected:
     vector<int> arr;
+    bool checkByDecrease() {
+        for (int i = 0; i < arr.capacity() - 1; i++) {
+            if (arr[i] < arr[i + 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
 public:
-    Array() {}
     Array(int size) {
         arr.resize(size);
     }
-    void setArray() {
-        for (int i = 0; i < arr.capacity(); i++)
+    void setArray(int size) {
+        arr.resize(size);
+        int i = 0;
+        while (i < arr.capacity()) {
             cin >> arr[i];
+            if (cin.fail())
+            {
+                printf("Ошибка ввода элемента, повторите ввод\n");
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue;
+            }
+            i++;
+        }
     }
     vector<int> getArray() {
         return arr;
     }
-    bool checkByDecrease() {
-        for (int i = 0; i < arr.capacity()-1; i++) {
-            if (arr[i] < arr[i + 1]) {
-                cout << "Массив не упорядочен по убыванию" << endl;
-                return false;
-            }
-        }
-        cout << "Массив упорядочен по убыванию" << endl;
-        return true;
+    bool getCheckByDecrease() {
+        return checkByDecrease();
     }
     void printArr() {
         for (int i = 0; i < arr.capacity(); i++) {
-            cout << arr[i] << " ";
+            cout << arr[i] << "\t";
         }
         cout << endl;
     }
 };
 
-class Matrix : Array {
+class Matrix : public Array {
     vector<Array> matrix;
 
     bool isPrime(int number) {
@@ -68,13 +80,9 @@ class Matrix : Array {
         }
         return true;
     }
-public:
-    Matrix(vector<Array> tmp) {
-        matrix = tmp;
-    }
-    bool isSimple(int row) {
-        for (int i = 0; i < matrix[row].getArray().capacity(); i++) {
-            if (isPrime(matrix[row].getArray()[i]) == false) {
+    bool isSimple() {
+        for (int i = 0; i < getArray().capacity(); i++) {
+            if (isPrime(getArray()[i]) == false) {
                 return false;
             }
         }
@@ -98,6 +106,21 @@ public:
         }
         return result;
     }
+public:
+    Matrix(vector<Array> tmp):Array(1){
+        matrix = tmp;
+    }
+    bool getSimple() {
+        return isSimple();
+    }
+
+    int getColumnsByIncrease() {
+        return columnsByIncrease();
+    }
+
+    int getRowsByIncrease() {
+        return rowsByIncrease();
+    }
 
     void printMatrix() {
         for (int i = 0; i < matrix.capacity(); i++)
@@ -112,17 +135,32 @@ int main()
 
     cout << "Введите размеры матрицы: ";
     cin >> rows >> columns;
+    if (rows <= 0 or columns <= 0) {
+        printf("Произошла ошибка ввода размерности матрицы");
+        exit(1);
+    }
     cout << "Введите элементы массива" << endl;
     vector<Array> origArray(rows, Array(columns));
 
-    for (int i = 0; i < rows; i++)
-        origArray[i].setArray();
+    for (int i = 0; i < rows; i++) 
+        origArray[i].setArray(columns);
 
     Matrix matrix(origArray);
     cout << "Вот ваша матрица" << endl;
     matrix.printMatrix();
-    cout << "Сколько строк возрастает по порядку: " << matrix.rowsByIncrease() << endl;
-    cout << "Сколько столбцов возрастает по порядку: " << matrix.columnsByIncrease() << endl;
-    cout << "Первая строка с простыми числами? " << matrix.isSimple(1) << endl;
-
+    cout << "Сколько строк возрастает по порядку: " << matrix.getRowsByIncrease() << endl;
+    cout << "Сколько столбцов возрастает по порядку: " << matrix.getColumnsByIncrease() << endl;
+    cout << "Введите размер массива класса Array" << endl;
+    int arrSize;
+    cin >> arrSize;
+    if (arrSize <= 0) {
+        printf("Произошла ошибка ввода размерности массива");
+        exit(1);
+    }
+    cout << "Введите элементы массива" << endl;
+    matrix.setArray(arrSize);
+    matrix.printArr();
+    cout << "Простая: " << matrix.getSimple() << endl;
+    cout << "Упорядочен по убыванию: " << matrix.getCheckByDecrease() << endl;
+    
 }
