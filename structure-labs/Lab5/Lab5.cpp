@@ -13,37 +13,44 @@ bool isSorted(int[], size_t);
 int* bubbleSort(const int[], const size_t);
 int* shakerSort(const int[], size_t);
 int partititate_array(int[], size_t, size_t, size_t);
-
-void merge(int [], size_t , size_t, size_t);
-void merge_sort(int[], int, int);
-int* merge_sorted(const int[], size_t);
-
 void input(const int[], const int);
 
 
 int main() {
-    const int len = 10;
-    const int arr[len] = { 0 };
+    int len = 0;
+    printf("Please write size of an array: ");
+    scanf("%d", &len);
+    int* arr = (int*) calloc(sizeof(int), len);
+    bool active = true;
+
     input(arr, len);
-    printf("Choose your type of sort\n");
-    printf("1) bubble sorting\n");
-    printf("2) shaker sorting\n");
-    printf("3) merge sort\n");
-    char choice = _getch();
-    switch (choice) {
-    case '1':
-        bubbleSort(arr, len);
-        break;
-    case '2':
-        shakerSort(arr, len);
-        break;
-    case '3':
+    do {
+        printf("Choose your type of sort\n");
+        printf("1) bubble sorting\n");
+        printf("2) shaker sorting\n");
+        printf("3) input\n");
+        printf("4) exit\n");
+        char choice = _getch();
+        switch (choice) {
+        case '1':
+            printf("This is bubble sorting\n");
+            bubbleSort(arr, len);
+            break;
+        case '2':
+            printf("This is shaker sorting\n");
+            shakerSort(arr, len);
+            break;
+        case '3':
+            input(arr, len);
+            break;
+        case '4':
+            active = false;
+            break;
+        default:
+            printf("Wrong selection. Try again\n");
 
-        break;
-    default:
-        printf("Wrong selection. Try again\n");
-
-    }
+        }
+    } while (active == true);
 }
 
 void input(const int arr[], const int len) {
@@ -158,66 +165,4 @@ int partititate_array(int arr[], size_t len, size_t low, size_t high) {
     println_array_with_pointers(arr, len, &arr[new_pivot_index], &arr[high]);
     swap_elements(&arr[new_pivot_index], &arr[high]);
     return new_pivot_index;
-}
-
-void merge(int arr[], size_t left, size_t mid, size_t right) {
-    int left_arr_count_elements = mid - left + 1;
-    int right_arr_count_elements = right - mid;
-
-    int* left_arr = (int*)calloc(left_arr_count_elements, sizeof(int));
-    int* right_arr = (int*)calloc(right_arr_count_elements, sizeof(int));
-
-    for (size_t i = 0; i < left_arr_count_elements; i++)
-        left_arr[i] = arr[left + i];
-    for (size_t i = 0; i < right_arr_count_elements; i++)
-        right_arr[i] = arr[mid + 1 + i];
-
-    size_t left_arr_index = 0;
-    size_t right_arr_index = 0;
-    size_t merged_arr_index = left;
-
-    // Merge the temp arrays back into array[left..right]
-    while (left_arr_index < left_arr_count_elements &&
-        right_arr_index < right_arr_count_elements) {
-        if (left_arr[left_arr_index] <= right_arr[right_arr_index]) {
-            arr[merged_arr_index] = left_arr[left_arr_index];
-            left_arr_index++;
-        }
-        else {
-            arr[merged_arr_index] = right_arr[right_arr_index];
-            right_arr_index++;
-        }
-        merged_arr_index++;
-    }
-
-    for (; left_arr_index < left_arr_count_elements;
-        left_arr_index++, merged_arr_index++) {
-        arr[merged_arr_index] = left_arr[left_arr_index];
-    }
-
-    for (; right_arr_index < right_arr_count_elements;
-        right_arr_index++, merged_arr_index++) {
-        arr[merged_arr_index] = right_arr[right_arr_index];
-    }
-
-    free(left_arr);
-    free(right_arr);
-}
-
-void merge_sort(int array[], int start, int end) {
-    if (start >= end)
-        return;
-
-    int mid = start + (end - start) / 2;
-    merge_sort(array, start, mid);
-    merge_sort(array, mid + 1, end);
-    merge(array, start, mid, end);
-}
-
-int* merge_sorted(const int src_arr[], size_t len) {
-    int* arr = copy_array(src_arr, len);
-    println_array(arr, len);
-    merge_sort(arr, 0, len);
-    println_array(arr, len);
-    return arr;
 }
