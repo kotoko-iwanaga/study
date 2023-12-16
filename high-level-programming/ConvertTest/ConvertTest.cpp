@@ -17,15 +17,21 @@ int main()
     //vector<int> Artemiy((int)a); // Best variant
     //int* Artemiy = (int*)malloc(sizeof(int)*(int)a); //Normal
     //int* Artemiy = (int*) calloc(sizeof(int),(int)a); //Normal
-    int* Artemiy = new int((int)a); // Works like a shit
+    int* Artemiy = new int[(int)a]; // Works like a shit
     for (int i = 0; i < (int)a; i++) {
         cin >> Artemiy[i];
         if (cin.fail()) {
+            cout << "Type error" << endl;
+            i--;
+        }
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        /*if (cin.fail()) {
             cout << "Error with Artemiy" << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             i--;
-        }
+        }*/
     }
     cout << "Array 1D:" << endl;
     for (int i = 0; i < (int)a; i++, putchar('\n')) {
