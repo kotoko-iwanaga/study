@@ -3,16 +3,42 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
+void cinTest();
+void roundTest();
 
 int main()
 {
-    double a;
+    roundTest();
+    //cinTest();
+}
+
+void roundTest() {
+    double a = 0;
+    double b = 0;
+    cin >> a;
+    cout << "A is " << a << endl;
+    cout << "ABS A is " << abs(a) << endl;
+    b = floor(abs(a));
+    cout << "B is " << b << endl;
+    if (abs(a) - floor(abs(a)) == 0) {
+        cout << "Happy-happy-happy" << endl;
+    }
+    else {
+        cout << "sosi" << endl;
+     }
+    cout << a <<endl;
+}
+
+
+void cinTest() {
+    double a = 0;
     int b;
     std::cin >> a;
     b = (int)a;
     std::cout << "Double: " << a << std::endl;
-    std::cout << "Int: " << (int)a << std::endl;
+    std::cout << "Int: " << b << std::endl;
     cout << "Please input elements of an 1D array" << endl;
     //vector<int> Artemiy((int)a); // Best variant
     //int* Artemiy = (int*)malloc(sizeof(int)*(int)a); //Normal
