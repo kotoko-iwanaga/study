@@ -1,14 +1,13 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale>
 
 void mergeElements(int[], int, int, int);
 void mergeSorting(int[], int, int);
+void inputToFile(int, int[], FILE*);
 
 
 int main() {
-    setlocale(0, "");
     FILE* inputFile, * outputFile;
     inputFile = fopen("input.txt", "r");
     outputFile = fopen("output.txt", "w");
@@ -29,15 +28,19 @@ int main() {
     mergeSorting(arr, 0, n - 1);
 
     fprintf(outputFile, "%d ",n);
-    for (int i = 0; i < n; i++) {
-        fprintf(outputFile, "%d ", arr[i]);
-    }
+    inputToFile(n, arr, outputFile);
 
     free(arr);
     fclose(inputFile);
     fclose(outputFile);
 
     return 0;
+}
+
+void inputToFile(int n, int arr[], FILE* outputFile) {
+    for (int i = 0; i < n; i++) {
+        fprintf(outputFile, "%d ", arr[i]);
+    }
 }
 
 
