@@ -19,7 +19,13 @@ void main(array< String^>^ args) {
 
 int M = 0, N = 0;
 std::vector< std::vector<int> > matrix(N, std::vector<int>(M, 0));
-//int** matrix;
+
+
+System::Void Lab2Winforms::MyForm::dataGridViewMatrix_CellBeginEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellCancelEventArgs^ e) {
+	label_alarm->ForeColor = Color::Red;
+	label_alarm->Text = "Ваша матрица была изменена, нажмите кнопку обновить, чтобы пересчитать результат";
+}
+
 
 
 void Lab2Winforms::MyForm::Show()
@@ -40,8 +46,12 @@ void Lab2Winforms::MyForm::Show()
 //Обработчик кнопки Посчитать
 System::Void Lab2Winforms::MyForm::button_calculate_Click(System::Object^ sender, System::EventArgs^ e) {
 	bool error = false;
+	if (M != 0 && N != 0) {
+		label_alarm->ForeColor = Color::Black;
+		label_alarm->Text = "Изменений матрицы не обнаружено";
+	}
 	if (M == 0 || N == 0) {
-		MessageBox::Show("Вы не можете запустить алгоритм для несуществующей матрицы", "Ошибка ввода размера");
+		MessageBox::Show("Вы не можете запустить алгоритм для несуществующей матрицы \nСоздайте её сначала.", "Ошибка ввода размера");
 		return System::Void();
 	}
 	for (int i = 0; i < matrix.size(); i++) {
@@ -58,6 +68,7 @@ System::Void Lab2Winforms::MyForm::button_calculate_Click(System::Object^ sender
 	}
 	if (error == false) {
 		int result = countRows(matrix);
+		Show();
 		if (result == -1) {
 			label_result->Text = "Столбцы состоят из одного элемента\nНевозможно определить порядок убывания/неубывания столбца";
 		}
@@ -71,8 +82,22 @@ System::Void Lab2Winforms::MyForm::button_calculate_Click(System::Object^ sender
 	}
 	
 }
+System::Void Lab2Winforms::MyForm::noErrorSize() {
+	label_sizeAlarm->ForeColor = Color::Black;
+	label_sizeAlarm->Text = "Изменений размера матрицы не обнаружено";
+}
+System::Void Lab2Winforms::MyForm::noErrorEdit() {
+	label_alarm->ForeColor = Color::Black;
+	label_alarm->Text = "Изменений в матрице не обнаружено";
+}
+System::Void Lab2Winforms::MyForm::throwErrorEdit() {
+	label_alarm->ForeColor = Color::Red;
+	label_alarm->Text = "Ваша матрица была изменена, нажмите кнопку обновить, чтобы пересчитать результат";
+}
 
 System::Void Lab2Winforms::MyForm::button_create_Click(System::Object^ sender, System::EventArgs^ e) {
+	noErrorSize();
+	noErrorEdit();
 	M = Convert::ToInt32(numericUpDownM->Value);
 	N = Convert::ToInt32(numericUpDownN->Value);
 
@@ -96,11 +121,15 @@ System::Void Lab2Winforms::MyForm::button_create_Click(System::Object^ sender, S
 System::Void Lab2Winforms::MyForm::button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	bool error = false;
 	int M_old = M, N_old = N;
+
+	noErrorSize();
+	throwErrorEdit();
 	M = Convert::ToInt32(numericUpDownM->Value);
 	N = Convert::ToInt32(numericUpDownN->Value);
 
 	if (dataGridViewMatrix->RowCount == 0) {
 		MessageBox::Show("Вы не можете изменить несуществующую матрицу. Создайте её сначала.", "Ошибка переназначения матрицы");
+		M = M_old; N = N_old;
 		return System::Void();
 	}
 	for (int i = 0; i < N_old; i++) { // здесь были олды
@@ -130,9 +159,10 @@ System::Void Lab2Winforms::MyForm::button2_Click(System::Object^ sender, System:
 		M = M_old;
 		N = N_old;
 		label_result->Text = "Отсутствует";
-		MessageBox::Show("Вы вместо числа написали строку, исправьте ввод\nНекорректный элемент выделен красным", "Ошибка ввода матрицы");
+		MessageBox::Show("Вы вместо числа написали строку, исправьте ввод\nНекорректный элемент выделен красным", "Ошибка переназначения матрицы");
 	}
 }
+
 
 System::Void Lab2Winforms::MyForm::выходToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	Application::Exit();
@@ -143,19 +173,10 @@ System::Void Lab2Winforms::MyForm::оПрограммеToolStripMenuItem_Click(System::Obj
 	MessageBox::Show("Создана Виктором для лабораторной работы №2", "Информация о программе");
 	return System::Void();
 }
-System::Void Lab2Winforms::MyForm::dataGridViewMatrix_CellValidating(System::Object^ sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs^ e) {
-	if (e->ColumnIndex == 0) { // Проверяем корректность ввода в определенном столбце
-		// Получаем введенное значение
-		String^ input = e->FormattedValue->ToString();
 
-		// Проверяем корректность ввода (например, что значение не пустое и соответствует определенному формату)
-		if (String::IsNullOrEmpty(input)) {
-			e->Cancel = true; // Отменяем ввод, если значение некорректное
-			MessageBox::Show("Значение не может быть пустым", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		else if (!System::Text::RegularExpressions::Regex::IsMatch(input, "^[0-9]+$")) {
-			e->Cancel = true;
-			MessageBox::Show("Значение должно быть числом", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-	}
+System::Void Lab2Winforms::MyForm::numericUpDownM_ValueChanged(System::Object^ sender, System::EventArgs^ e)
+{
+	label_sizeAlarm->ForeColor = Color::Red;
+	label_sizeAlarm->Text = "Размеры матрицы были изменены, нажмите Обновить или создайте новую матрицу";
+	return System::Void();
 }

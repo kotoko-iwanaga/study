@@ -59,6 +59,7 @@ namespace Lab2Winforms {
 	private: System::Windows::Forms::ToolStripMenuItem^ ‚˚ıÓ‰ToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ ÓœÓ„‡ÏÏÂToolStripMenuItem;
 	private: System::Windows::Forms::Button^ button_calculate;
+	private: System::Windows::Forms::Label^ label_sizeAlarm;
 
 
 
@@ -104,6 +105,7 @@ namespace Lab2Winforms {
 			this->‚˚ıÓ‰ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->ÓœÓ„‡ÏÏÂToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->button_calculate = (gcnew System::Windows::Forms::Button());
+			this->label_sizeAlarm = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewMatrix))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDownM))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDownN))->BeginInit();
@@ -123,6 +125,10 @@ namespace Lab2Winforms {
 			// 
 			// dataGridViewMatrix
 			// 
+			this->dataGridViewMatrix->AllowUserToAddRows = false;
+			this->dataGridViewMatrix->AllowUserToDeleteRows = false;
+			this->dataGridViewMatrix->AllowUserToResizeColumns = false;
+			this->dataGridViewMatrix->AllowUserToResizeRows = false;
 			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
 			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
 			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -148,6 +154,7 @@ namespace Lab2Winforms {
 			this->dataGridViewMatrix->RowTemplate->Height = 24;
 			this->dataGridViewMatrix->Size = System::Drawing::Size(314, 256);
 			this->dataGridViewMatrix->TabIndex = 1;
+			this->dataGridViewMatrix->CellBeginEdit += gcnew System::Windows::Forms::DataGridViewCellCancelEventHandler(this, &MyForm::dataGridViewMatrix_CellBeginEdit);
 			this->dataGridViewMatrix->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView1_CellContentClick);
 			// 
 			// button_create
@@ -224,10 +231,8 @@ namespace Lab2Winforms {
 			this->label_alarm->ForeColor = System::Drawing::Color::Brown;
 			this->label_alarm->Location = System::Drawing::Point(391, 153);
 			this->label_alarm->Name = L"label_alarm";
-			this->label_alarm->Size = System::Drawing::Size(343, 99);
+			this->label_alarm->Size = System::Drawing::Size(343, 52);
 			this->label_alarm->TabIndex = 14;
-			this->label_alarm->Text = L"¬‡¯‡ Ï‡ÚËˆ‡ ·˚Î‡ ËÁÏÂÌÂÌ‡, Ì‡ÊÏËÚÂ ÍÌÓÔÍÛ Ó·ÌÓ‚ËÚ¸, ˜ÚÓ·˚ ÔÂÂÒ˜ËÚ‡Ú¸ ÂÁÛÎ¸Ú‡Ú";
-			this->label_alarm->Visible = false;
 			// 
 			// numericUpDownM
 			// 
@@ -253,6 +258,7 @@ namespace Lab2Winforms {
 			this->numericUpDownN->Size = System::Drawing::Size(48, 27);
 			this->numericUpDownN->TabIndex = 16;
 			this->numericUpDownN->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDownN->ValueChanged += gcnew System::EventHandler(this, &MyForm::numericUpDownM_ValueChanged);
 			// 
 			// menuStrip1
 			// 
@@ -291,11 +297,22 @@ namespace Lab2Winforms {
 			this->button_calculate->UseVisualStyleBackColor = true;
 			this->button_calculate->Click += gcnew System::EventHandler(this, &MyForm::button_calculate_Click);
 			// 
+			// label_sizeAlarm
+			// 
+			this->label_sizeAlarm->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label_sizeAlarm->ForeColor = System::Drawing::Color::Brown;
+			this->label_sizeAlarm->Location = System::Drawing::Point(393, 205);
+			this->label_sizeAlarm->Name = L"label_sizeAlarm";
+			this->label_sizeAlarm->Size = System::Drawing::Size(343, 52);
+			this->label_sizeAlarm->TabIndex = 19;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(748, 477);
+			this->Controls->Add(this->label_sizeAlarm);
 			this->Controls->Add(this->button_calculate);
 			this->Controls->Add(this->numericUpDownN);
 			this->Controls->Add(this->numericUpDownM);
@@ -327,6 +344,7 @@ namespace Lab2Winforms {
 #pragma endregion
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 	}
+private: System::Void dataGridViewMatrix_CellBeginEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellCancelEventArgs^ e);
 
 private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -335,12 +353,14 @@ private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void ‚˚ıÓ‰ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void ÓœÓ„‡ÏÏÂToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-private: System::Void numericUpDownM_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
-}
+private: System::Void numericUpDownM_ValueChanged(System::Object^ sender, System::EventArgs^ e);
 private: System::Void button_create_Click(System::Object^ sender, System::EventArgs^ e);
 	   private: void Show();
 private: System::Void button_calculate_Click(System::Object^ sender, System::EventArgs^ e);
-private: System::Void dataGridViewMatrix_CellValidating(System::Object^ sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs^ e);
+private: System::Void noErrorSize();
+private: System::Void noErrorEdit();
+private: System::Void throwErrorEdit();
+
 };
 
 
