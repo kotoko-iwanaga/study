@@ -16,7 +16,7 @@ int partititate_array(int[], size_t, size_t, size_t);
 void input(const int[], const int);
 
 
-int main() {
+void main() {
     int len = 0;
     printf("Please write size of an array: ");
     scanf("%d", &len);
