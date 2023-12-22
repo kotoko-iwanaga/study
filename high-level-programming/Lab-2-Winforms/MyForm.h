@@ -327,8 +327,7 @@ namespace Lab2Winforms {
 #pragma endregion
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 	}
-	private: System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
+
 private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -341,6 +340,7 @@ private: System::Void numericUpDownM_ValueChanged(System::Object^ sender, System
 private: System::Void button_create_Click(System::Object^ sender, System::EventArgs^ e);
 	   private: void Show();
 private: System::Void button_calculate_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void dataGridViewMatrix_CellValidating(System::Object^ sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs^ e);
 };
 
 
