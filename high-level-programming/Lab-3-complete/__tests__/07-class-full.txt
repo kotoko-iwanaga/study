@@ -1,0 +1,20 @@
+
+// this is Point, like A(x, y, z)
+
+class Point {
+
+  int get_x() {some code to return x}
+
+  int get_y();
+  int get_z();
+
+  bool is_firt_quarter(); 
+
+  void print() {}
+
+  int get_sum(int x, float y);
+};
+
+int Point::get_z() {
+  this method must return z
+}

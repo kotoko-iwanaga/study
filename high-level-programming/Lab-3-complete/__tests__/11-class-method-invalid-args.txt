@@ -1,0 +1,4 @@
+
+class String {
+  int to_int(char ch,) {}
+};
