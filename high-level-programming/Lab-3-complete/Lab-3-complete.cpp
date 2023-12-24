@@ -17,34 +17,23 @@ void test_lexer() {
     }
 }
 
-int main(int argc, char** argv) {
-    if (argc == 1) {
-        // test_lexer();
+int main() {
+    Parser parser;
 
-        Parser parser;
+    parser.parse_file("./__tests__/01-empty.txt");
+    parser.parse_file("./__tests__/02-trash.txt");
+    parser.parse_file("./__tests__/03-class-empty.txt");
+    parser.parse_file("./__tests__/04-class-empty-struct.txt");
+    parser.parse_file("./__tests__/05-class-empty-union.txt");
+    parser.parse_file("./__tests__/06-class-outer-methods.txt");
+    parser.parse_file("./__tests__/07-class-full.txt");
 
-        parser.parse_file("./__tests__/01-empty.txt");
-        parser.parse_file("./__tests__/02-trash.txt");
-        parser.parse_file("./__tests__/03-class-empty.txt");
-        parser.parse_file("./__tests__/04-class-empty-struct.txt");
-        parser.parse_file("./__tests__/05-class-empty-union.txt");
-        parser.parse_file("./__tests__/06-class-outer-methods.txt");
-        parser.parse_file("./__tests__/07-class-full.txt");
-
-        // files with errors
-        parser.parse_file("./__tests__/10-class-invalid-end.txt");
-        parser.parse_file("./__tests__/11-class-method-invalid-args.txt");
-        parser.parse_file("./__tests__/12-class-invalid-outer-method.txt");
-        parser.parse_file("no-such-file.txt");
-    }
-
-    if (argc == 2) {
-        Parser parser;
-        parser.parse_file(argv[1]);
-    }
-
-    if (argc > 2) {
-        std::cout << "please pass filename as param to executable" << std::endl;
-        exit(1);
-    }
+    // files with errors
+    parser.parse_file("./__tests__/08-class-invalid-noname.txt");
+    parser.parse_file("./__tests__/10-class-invalid-end.txt");
+    parser.parse_file("./__tests__/11-class-method-invalid-args.txt");
+    parser.parse_file("./__tests__/12-class-invalid-outer-method.txt");
+    parser.parse_file("./__tests__/13-class-invalid-method-code.txt");
+    // file which no exist
+    parser.parse_file("no-such-file.txt");
 }

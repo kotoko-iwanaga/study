@@ -3,6 +3,7 @@
 #include "../utils/FileReader.cpp"
 #include "ExceptionWrongToken.cpp"
 
+
 class Parser {
  private:
   Tokenizer tokenizer;

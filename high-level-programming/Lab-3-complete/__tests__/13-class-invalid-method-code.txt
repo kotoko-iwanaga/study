@@ -1,0 +1,4 @@
+class Anime {
+	int Lock(int key, bool state,) {
+	} 
+};
