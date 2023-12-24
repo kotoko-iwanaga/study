@@ -151,6 +151,7 @@ namespace Lab2Winforms {
 			this->dataGridViewMatrix->Location = System::Drawing::Point(35, 73);
 			this->dataGridViewMatrix->Name = L"dataGridViewMatrix";
 			this->dataGridViewMatrix->RowHeadersWidth = 51;
+			this->dataGridViewMatrix->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
 			this->dataGridViewMatrix->RowTemplate->Height = 24;
 			this->dataGridViewMatrix->Size = System::Drawing::Size(314, 256);
 			this->dataGridViewMatrix->TabIndex = 1;

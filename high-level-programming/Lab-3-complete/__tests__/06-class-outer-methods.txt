@@ -1,0 +1,6 @@
+
+void Dog::woof();
+
+void Dog::woof(int sound, float time, int volume) {
+  woof!
+}
