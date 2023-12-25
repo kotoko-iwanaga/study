@@ -1,0 +1,10 @@
+
+union geek { 
+    int getAge(); 
+    char getGrade() { test; } 
+    float setGPA(); 
+};
+
+float geek::setGPA() {
+	test;
+}

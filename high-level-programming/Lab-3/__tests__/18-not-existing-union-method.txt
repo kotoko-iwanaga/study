@@ -1,0 +1,5 @@
+
+
+char geek::getGrade() { 
+	test; 
+} 

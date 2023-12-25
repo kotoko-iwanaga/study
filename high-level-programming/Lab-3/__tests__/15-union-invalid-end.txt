@@ -1,0 +1,8 @@
+
+union geek { 
+    // Some functions
+    int getAge(); 
+    char getGrade() { test; } 
+    float setGPA(); 
+
+

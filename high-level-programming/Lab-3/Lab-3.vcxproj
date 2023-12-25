@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{67396652-4891-4dca-b3e8-ac38e1c03620}</ProjectGuid>
+    <ProjectGuid>{19cd3c2e-95e9-4484-ba2a-f8bb6392678e}</ProjectGuid>
     <RootNamespace>Lab3</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -128,6 +128,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Lab-3.cpp" />
+    <ClCompile Include="parser\ExceptionWrongToken.cpp" />
+    <ClCompile Include="parser\Parser.cpp" />
+    <ClCompile Include="tokenizer\Token.cpp" />
+    <ClCompile Include="tokenizer\Tokenizer.cpp" />
+    <ClCompile Include="tokenizer\TokenPosition.cpp" />
+    <ClCompile Include="tokenizer\TokenType.cpp" />
+    <ClCompile Include="utils\FileReader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Lab-3.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

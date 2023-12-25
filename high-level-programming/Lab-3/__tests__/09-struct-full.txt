@@ -1,0 +1,12 @@
+
+struct Game {
+	int getAge();
+	char getRank() {
+		Hello_There;
+	}
+	float Level();
+};
+
+float Game::Level() {
+	GetLevel();
+}

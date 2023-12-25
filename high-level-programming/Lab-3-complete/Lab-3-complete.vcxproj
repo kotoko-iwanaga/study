@@ -128,6 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Lab-3-complete.cpp" />
+    <ClCompile Include="parser\ExceptionWrongToken.cpp" />
+    <ClCompile Include="parser\Parser.cpp" />
+    <ClCompile Include="tokenizer\Token.cpp" />
+    <ClCompile Include="tokenizer\Tokenizer.cpp" />
+    <ClCompile Include="tokenizer\TokenPosition.cpp" />
+    <ClCompile Include="tokenizer\TokenType.cpp" />
+    <ClCompile Include="utils\FileReader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,9 @@
+
+union geek { 
+    // Defining data members 
+    int getAge(); 
+    char getGrade() { test; 
+    float setGPA(); 
+};
+
+
